@@ -1,0 +1,6 @@
+image: windows-server-2019-dc
+
+build_script:
+- ps: Write-Host "Build test!"
+
+test: off
