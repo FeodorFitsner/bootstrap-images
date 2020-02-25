@@ -2,6 +2,7 @@ image: windows-server-2019-dc
 
 environment:
   scripts_version: 1.0.0
+  base_dir: src\build-images-%scripts_version%\scripts\Windows
 
 init:
 - ps: $ProgressPreference = 'SilentlyContinue'
@@ -9,19 +10,19 @@ init:
 
 clone_script:
 - ps: Invoke-WebRequest "https://github.com/appveyor/build-images/archive/$($env:scripts_version).zip" -OutFile scripts.zip
-#- ps: Expand-Archive -Path $env:APPVEYOR_BUILD_FOLDER\scripts.zip -DestinationPath $env:APPVEYOR_BUILD_FOLDER\src -Force
-- ps: Add-Type -AssemblyName System.IO.Compression.FileSystem
-- ps: '[System.IO.Compression.ZipFile]::ExtractToDirectory("$env:APPVEYOR_BUILD_FOLDER\scripts.zip", "$env:APPVEYOR_BUILD_FOLDER\src")'
+- ps: Expand-Archive -Path $env:APPVEYOR_BUILD_FOLDER\scripts.zip -DestinationPath $env:APPVEYOR_BUILD_FOLDER\src -Force
 
 build_script:
-- cd src\build-images-%scripts_version%\scripts\Windows
+- cd %base_dir%
 - ps: .\init_server.ps1
 #- ps: .\extend_system_volume.ps1
 
+# Restart VM
 - ps: Start-Sleep -s 5
 - ps: Restart-Computer
 - ps: Start-Sleep -s 5
 
+- cd %base_dir%
 - ps: Copy-Item .\path-utils.psm1 "$env:TEMP\path-utils.psm1"
 - ps: .\install_path_utils.ps1
 
