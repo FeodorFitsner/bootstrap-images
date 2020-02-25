@@ -11,7 +11,7 @@ clone_script:
 - ps: Invoke-WebRequest "https://github.com/appveyor/build-images/archive/$($env:scripts_version).zip" -OutFile scripts.zip
 #- ps: Expand-Archive -Path $env:APPVEYOR_BUILD_FOLDER\scripts.zip -DestinationPath $env:APPVEYOR_BUILD_FOLDER\src -Force
 - ps: Add-Type -AssemblyName System.IO.Compression.FileSystem
-- ps: '[System.IO.Compression.ZipFile]::ExtractToDirectory($env:APPVEYOR_BUILD_FOLDER\scripts.zip, $env:APPVEYOR_BUILD_FOLDER\src)'
+- ps: '[System.IO.Compression.ZipFile]::ExtractToDirectory("$env:APPVEYOR_BUILD_FOLDER\scripts.zip", "$env:APPVEYOR_BUILD_FOLDER\src")'
 
 build_script:
 - cd src\build-images-%scripts_version%\scripts\Windows
