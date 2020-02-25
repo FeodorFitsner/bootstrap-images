@@ -14,10 +14,15 @@ clone_script:
 - ps: [System.IO.Compression.ZipFile]::ExtractToDirectory($env:APPVEYOR_BUILD_FOLDER\scripts.zip, $env:APPVEYOR_BUILD_FOLDER\src)
 
 build_script:
-- cd src\build-images-%scripts_version%
-- ps: .\scripts\Windows\init_server.ps1
-#- ps: .\scripts\Windows\extend_system_volume.ps1
-- ps: Copy-Item .\scripts\Windows\path-utils.ps1 "$env:TEMP\path-utils.psm1"
-- ps: .\scripts\Windows\install_path_utils.ps1
+- cd src\build-images-%scripts_version%\scripts\Windows
+- ps: .\init_server.ps1
+#- ps: .\extend_system_volume.ps1
+
+- ps: Start-Sleep -s 5
+- ps: Restart-Computer
+- ps: Start-Sleep -s 5
+
+- ps: Copy-Item .\path-utils.psm1 "$env:TEMP\path-utils.psm1"
+- ps: .\install_path_utils.ps1
 
 test: off
