@@ -5,11 +5,12 @@ environment:
 
 clone_script:
 - ps: Invoke-WebRequest "https://github.com/appveyor/build-images/archive/$($env:scripts_version).zip" -OutFile scripts.zip
+- echo %APPVEYOR_BUILD_FOLDER%
 - dir
-- ps: Expand-Archive -Path scripts.zip -DestinationPath $env:APPVEYOR_BUILD_FOLDER -Force
+- ps: Expand-Archive -Path $env:APPVEYOR_BUILD_FOLDER\scripts.zip -DestinationPath $env:APPVEYOR_BUILD_FOLDER\src -Force
 
 build_script:
-- cd build-images-%scripts_version%
+- cd src\build-images-%scripts_version%
 - dir
 
 test: off
