@@ -13,9 +13,9 @@ clone_script:
 
 build_script:
 - cd src\build-images-%scripts_version%
-- ps: & .\scripts\Windows\init_server.ps1
-#- ps: & .\scripts\Windows\extend_system_volume.ps1
+- ps: .\scripts\Windows\init_server.ps1
+#- ps: .\scripts\Windows\extend_system_volume.ps1
 - ps: Copy-Item .\scripts\Windows\path-utils.ps1 "$env:TEMP\path-utils.psm1"
-- ps: & .\scripts\Windows\install_path_utils.ps1
+- ps: .\scripts\Windows\install_path_utils.ps1
 
 test: off
