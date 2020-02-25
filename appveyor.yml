@@ -1,6 +1,14 @@
 image: windows-server-2019-dc
 
+environment:
+  scripts_version: 1.0.0
+
+clone_script:
+- ps: Start-FileDownload "https://github.com/appveyor/build-images/archive/$($env:scripts_version).zip"
+- ps: Expand-Archive -Path "$($env:scripts_version).zip" -DestinationPath . | Out-Null
+
 build_script:
-- ps: Write-Host "Build test!"
+- cd build-images-%scripts_version%
+- dir
 
 test: off
