@@ -3,10 +3,12 @@ image: windows-server-2019-dc
 environment:
   scripts_version: 1.0.0
 
+init:
+- ps: $ProgressPreference = 'SilentlyContinue'
+- ps: $ErrorActionPreference = 'Stop'
+
 clone_script:
 - ps: Invoke-WebRequest "https://github.com/appveyor/build-images/archive/$($env:scripts_version).zip" -OutFile scripts.zip
-- echo %APPVEYOR_BUILD_FOLDER%
-- dir
 - ps: Expand-Archive -Path $env:APPVEYOR_BUILD_FOLDER\scripts.zip -DestinationPath $env:APPVEYOR_BUILD_FOLDER\src -Force
 
 build_script:
