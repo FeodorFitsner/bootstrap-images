@@ -25,6 +25,7 @@ build_script:
 
 - cd %base_dir%
 - ps: Copy-Item .\path-utils.psm1 "$env:TEMP\path-utils.psm1"
+- ps: .\install_path_utils.ps1
 - ps: .\install_powershell_core.ps1
 - ps: .\install_powershell_get.ps1
 - ps: .\install_7zip.ps1
