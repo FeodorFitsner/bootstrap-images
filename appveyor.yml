@@ -3,6 +3,7 @@ image: windows-server-2019-dc
 environment:
   scripts_version: 1.0.0
   base_dir: src\build-images-%scripts_version%\scripts\Windows
+  APPVEYOR_BAKE_IMAGE: bootstrap-win-test-1
 
 init:
 - ps: $ProgressPreference = 'SilentlyContinue'
