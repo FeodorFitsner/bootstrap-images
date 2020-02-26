@@ -6,10 +6,8 @@ environment:
   APPVEYOR_BAKE_IMAGE: bootstrap-win-test-1
 
 init:
-- ps: $ProgressPreference = 'SilentlyContinue'
 - ps: $ErrorActionPreference = 'Stop'
-- ps: $cloud_type = (Get-ItemProperty "HKLM:\Software\AppVeyor\Build Agent").Mode
-- ps: $cloud_type
+- ps: $env:cloud_type = (Get-ItemProperty "HKLM:\Software\AppVeyor\Build Agent").Mode
 
 clone_script:
 - ps: Invoke-WebRequest "https://github.com/appveyor/build-images/archive/$($env:scripts_version).zip" -OutFile scripts.zip
@@ -51,8 +49,8 @@ build_script:
 
 #- ps: Copy-Item .\docker-appveyor.psm1 "$env:TEMP\docker-appveyor.psm1"
 - cd %base_dir%
-- ps: if ($cloud_type -eq 'GCE' -or $cloud_type -eq 'AmazonEC2') { .\install_docker.ps1 }
-- ps: if ($cloud_type -ne 'GCE' -and $cloud_type -ne 'AmazonEC2') { .\install_docker_desktop.ps1 }
+- ps: if ($env:cloud_type -eq 'GCE' -or $cloud_type -eq 'AmazonEC2') { .\install_docker.ps1 }
+- ps: if ($env:cloud_type -ne 'GCE' -and $cloud_type -ne 'AmazonEC2') { .\install_docker_desktop.ps1 }
 
 # Restart VM
 - ps: Start-Sleep -s 5
@@ -60,8 +58,8 @@ build_script:
 - ps: Start-Sleep -s 5
 
 - cd %base_dir%
-- ps: if ($cloud_type -eq 'GCE' -or $cloud_type -eq 'AmazonEC2') { .\install_docker_after_reboot.ps1 }
-- ps: if ($cloud_type -ne 'GCE' -and $cloud_type -ne 'AmazonEC2') { .\install_docker_desktop_after_reboot.ps1 }
+- ps: if ($env:cloud_type -eq 'GCE' -or $cloud_type -eq 'AmazonEC2') { .\install_docker_after_reboot.ps1 }
+- ps: if ($env:cloud_type -ne 'GCE' -and $cloud_type -ne 'AmazonEC2') { .\install_docker_desktop_after_reboot.ps1 }
 
 - ps: .\disable_windows_background_services.ps1
 - ps: .\enforce_windows_firewall.ps1
