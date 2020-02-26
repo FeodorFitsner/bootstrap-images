@@ -9,6 +9,7 @@ init:
 - ps: $ProgressPreference = 'SilentlyContinue'
 - ps: $ErrorActionPreference = 'Stop'
 - ps: $cloud_type = (Get-ItemProperty "HKLM:\Software\AppVeyor\Build Agent").Mode
+- ps: $cloud_type
 
 clone_script:
 - ps: Invoke-WebRequest "https://github.com/appveyor/build-images/archive/$($env:scripts_version).zip" -OutFile scripts.zip
